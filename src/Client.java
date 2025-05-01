@@ -18,10 +18,21 @@ public class Client implements TCPConnectionListener {
      * @throws RuntimeException если не удалось установить соединение
      */
     public Client(String ip, EventClientListener listener) {
+        this(ip, 8080, listener);
+    }
+
+    /**
+     * Создает новый клиент и устанавливает соединение с сервером.
+     * @param ip IP-адрес сервера
+     * @param port порт соединения
+     * @param listener слушатель событий клиента
+     * @throws RuntimeException если не удалось установить соединение
+     */
+    public Client(String ip, int port, EventClientListener listener) {
         this.eventClientListener = listener;
         try {
             // Создаем новое TCP-соединение с сервером
-            this.connection = new TCPConnection(this, ip, Constants.PORT);
+            this.connection = new TCPConnection(this, ip, port);
         } catch (IOException e) {
             throw new RuntimeException("Failed to establish connection", e);
         }

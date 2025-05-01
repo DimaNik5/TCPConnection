@@ -19,6 +19,15 @@ public class Server implements TCPConnectionListener {
      * @param listener слушатель событий сервера для callback-уведомлений
      */
     public Server(EventServerListener listener) {
+        this(8080, listener);
+    }
+
+    /**
+     * Создает новый серверный экземпляр и запускает прием подключений.
+     * @param port порт соединения
+     * @param listener слушатель событий сервера для callback-уведомлений
+     */
+    public Server(int port, EventServerListener listener) {
         this.eventConnectionListener = listener;
         this.connection = new ArrayList<>();
 
@@ -31,7 +40,7 @@ public class Server implements TCPConnectionListener {
         }
 
         // Основной цикл принятия подключений
-        try (ServerSocket serverSocket = new ServerSocket(Constants.PORT)) {
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 try {
                     // Принимаем новое подключение и создаем TCPConnection
